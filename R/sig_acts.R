@@ -119,6 +119,5 @@ melted_data <- merged_data %>%
       )
   )
 
-View(melted_data)
-
+saveRDS(melted_data, file = "data/signatures/TCGA-COAD_clinvars_sigscores.rds")
 
