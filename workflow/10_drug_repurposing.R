@@ -47,10 +47,10 @@ prism2[prism2 == 0] <- NA
 # remove duplicates
 prism2 <-
     prism2 %>%
-    # group_by(name) %>%
-    # arrange(factor(screen_id, levels = c("MTS010", "MTS006", "MTS005", "HTS002"))) %>%
-    # dplyr::slice(1) %>%
-    # ungroup() %>%
+    group_by(broad_id) %>%
+    arrange(factor(screen_id, levels = c("MTS010", "MTS006", "MTS005", "HTS002"))) %>%
+    dplyr::slice(1) %>%
+    ungroup() %>%
     dplyr::select(-c(screen_id, name))
 
 prism2_m <- as.matrix(prism2[, -c(1, 2)])
@@ -106,3 +106,6 @@ for (i in seq_along(signature)) {
 names(fgseaRes) <- signature
 
 saveRDS(fgseaRes, file = outputpath)
+
+
+fgsea::plotEnrichment(fgseaRes$ours)
