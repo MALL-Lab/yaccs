@@ -3,7 +3,7 @@ source("requirements.R")
 
 # Input paths
 cc_signatures_inputpath <- "extdata/signatures/cell_cycle.rds"
-tcga_inputpath <- "data/pp/counts_norm_coad_patients.rds"
+tcga_inputpath <- "extdata/tcga-coad/counts_norm_coad_patients.rds"
 coad_signatures_inputpath <- "extdata/signatures/signatures_coad.rds"
 
 # Load data
@@ -15,11 +15,8 @@ coad_signatures <- readRDS(coad_signatures_inputpath)
 signatures <- c(cc_signatures, coad_signatures)
 
 # Calculate signature´s activity
-gsva <- gsva(
-    t(train),
-    signatures,
-    method = "plage",
-    kcdf = "Gaussian")
+plagePar <- plageParam(t(train), signatures)
+gsva <- gsva(plagePar, verbose = FALSE)
 gsva <- as.data.frame(t(gsva))
 
 # Plot
